@@ -1,0 +1,23 @@
+### JetBrains IDE
+/.idea/
+
+### VS Code
+/.vscode/
+
+### Composer
+/vendor/
+composer.lock
+
+### Laravel
+/public/storage/
+/storage/*.key
+/storage/laravels*
+
+### Dotenv
+.env
+
+### PHPUnit
+.phpunit.result.cache
+
+### PHP-CS-Fixer
+.php-cs-fixer.cache
