@@ -198,6 +198,7 @@ return [
             // Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             App\Jobs\Timers\GameTimer::class,
             App\Jobs\Timers\MemberTimer::class,
+            App\Jobs\Timers\PingTimer::class,
             App\Jobs\Timers\WagerTimer::class,
         ],
 
