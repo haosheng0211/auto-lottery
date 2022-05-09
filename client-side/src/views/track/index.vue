@@ -16,7 +16,7 @@ export default {
       headers: [
         { text: '期數', value: 'cycle_no', cellClass: 'highlight' },
         { text: '遊戲', value: 'game.name' },
-        { text: '跟注帳號', value: 'member.agent.username' },
+        { text: '跟注帳號', value: 'staff.username' },
         { text: '會員帳號', value: 'member.username' },
         { text: '目標', value: 'trick.name' },
         { text: '金額', value: 'amount' },
