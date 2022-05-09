@@ -9,11 +9,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    notification: false,
+    audioVolume: 1,
   },
   mutations: {
-    setNotification(state, notification) {
-      state.notification = notification
+    setAudioVolume(state, audioVolume) {
+      state.audioVolume = audioVolume
     },
   },
   modules: { i18n, auth },
@@ -23,7 +23,7 @@ export default new Vuex.Store({
       storage: cookieStorage,
     }),
     VuexPersistedstate({
-      paths: ['i18n', 'notification'],
+      paths: ['i18n', 'audioVolume'],
       storage: localStorage,
     }),
   ],

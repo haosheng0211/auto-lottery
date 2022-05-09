@@ -1,41 +1,68 @@
 <template>
-  <div>
-    <v-tooltip bottom>
-      <template #activator="{ on, attrs }">
-        <v-btn v-bind="attrs" icon v-on="on" @click="toggleNotification">
-          <v-icon>
-            {{ notification ? 'mdi-volume-high' : 'mdi-volume-off' }}
-          </v-icon>
-        </v-btn>
-      </template>
-      {{ notification ? '關閉通知' : '開啟通知' }}
-    </v-tooltip>
-  </div>
+  <v-menu offset-y :close-on-content-click="false">
+    <template #activator="{ on, attrs }">
+      <v-btn v-bind="attrs" icon v-on="on">
+        <v-icon>
+          {{ notification ? 'mdi-volume-high' : 'mdi-volume-off' }}
+        </v-icon>
+      </v-btn>
+    </template>
+    <v-card min-width="250px">
+      <v-card-text>
+        <v-slider
+          v-model="audioVolume"
+          max="1"
+          step="0.1"
+          min="0"
+          hide-details
+        />
+      </v-card-text>
+    </v-card>
+  </v-menu>
 </template>
 
 <script>
 export default {
   name: 'Notification',
+  data() {
+    return {
+      audio: null,
+    }
+  },
   computed: {
-    notification: {
+    notification() {
+      return this.audioVolume > 0
+    },
+    audioVolume: {
       get() {
-        return this.$store.state.notification
+        return this.$store.state.audioVolume
       },
       set(value) {
-        this.$store.commit('setNotification', value)
+        console.log(value)
+        this.$store.commit('setAudioVolume', value)
       },
+    },
+  },
+  watch: {
+    '$store.state.audioVolume': {
+      handler(value) {
+        this.$nextTick(() => {
+          if (this.audio) {
+            this.audio.volume = value
+          }
+        })
+      },
+      immediate: true,
     },
   },
   mounted() {
     this.subscribeNotification()
+    this.createAudio()
   },
   destroyed() {
     this.unsubscribeNotification()
   },
   methods: {
-    toggleNotification() {
-      this.notification = !this.notification
-    },
     subscribeNotification() {
       const agentChannel = this.$pusher.subscribe('agent')
 
@@ -73,11 +100,12 @@ export default {
       this.$pusher.unsubscribe('staff')
       this.$pusher.unsubscribe('wager')
     },
+    createAudio() {
+      this.audio = new Audio(require('@/assets/audio/notification.wav'))
+    },
     playerAudio() {
       if (this.notification) {
-        const audio = new Audio(require('@/assets/audio/notification.wav'))
-
-        audio.play()
+        this.audio.play()
       }
     },
   },
