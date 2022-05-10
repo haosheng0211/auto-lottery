@@ -47,7 +47,6 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:api',
             AcceptJson::class,
             AcceptLanguage::class,
             SubstituteBindings::class,
