@@ -36,8 +36,6 @@ class StaffPingJob extends Task
         } catch (Throwable $e) {
             if (in_array($e->getCode(), ErrorCode::Unauthorized)) {
                 $this->model->update(['status' => StatusCode::Pending]);
-            } else {
-                $this->model->update(['status' => StatusCode::Stopped, 'stop_message' => $e->getMessage()]);
             }
         }
     }
