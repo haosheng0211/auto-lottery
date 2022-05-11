@@ -48,12 +48,6 @@ class PublishTrack extends Task
                 return;
             }
 
-            if (! $game->active) {
-                $this->track->update(['status' => StatusCode::Stopped, 'stop_message' => '已關盤']);
-
-                return;
-            }
-
             $request = Http::send('POST', '/api_m/get/300001', [
                 'base_uri' => config('lottery.staff.base_uri'),
                 'headers'  => [
